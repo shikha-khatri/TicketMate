@@ -1,0 +1,33 @@
+#Ticket .tck_type{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+#Ticket .tck_type ul{
+    
+}
+
+#Ticket .tck_type ul li img{
+    width: 70%;
+    height: 300px;
+    margin: 5px;
+    }
+    #Ticket .tck_ind{
+
+    }
+    #Ticket .img_txt{
+        all:none;
+        font-size: large;
+        background-color: rgb(0, 0, 0);
+        color: white;
+        width: 30%;
+        padding: 8px;
+        text-align: center;
+        
+        
+    }
+    #Ticket .tck_type ul li p .tck_txt:hover{
+        background-color: rgb(138, 9, 9);
+    }

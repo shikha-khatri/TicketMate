@@ -1,0 +1,41 @@
+#buyorsell .buyorsell ul{ 
+    display: flex;
+    flex-direction: row;
+    /* background-color: rgb(250, 49, 49); */
+    /* justify-content:space-around; */
+    padding: 15px;
+    
+}
+#buyorsell .buyorsell ul li{
+    
+    /* border: 1px solid black; */
+    color: white;
+    text-decoration: none;
+    list-style: none;
+    font-size: x-large;
+    text-align: center;
+    background-color: rgb(236, 29, 29);
+    padding: 10px;
+    width: 50%;
+    margin: 5px;
+    border-radius: 5%;
+}
+
+
+
+
+
+#buyorsell .buyorsell .active:hover{
+    background-color: rgb(51, 42, 42);
+}
+#buyorsell .buyorsell .notactive:hover{
+    background-color: rgb(250, 54, 54);
+}
+#buyorsell .buyorsell .active{
+    background-color: black;
+    
+    
+}
+
+
+ 

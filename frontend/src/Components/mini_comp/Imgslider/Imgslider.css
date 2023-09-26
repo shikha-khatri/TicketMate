@@ -1,0 +1,42 @@
+#Imgslider{
+    /* background-color:rgba(27, 31,34 ,0.85 ) ; */
+    color: black
+}
+#Imgslider{
+    font-size: 1.1rem;
+    line-height: 1.0rem;
+    letter-spacing: 0.04rem;
+    font-weight: 700;
+    text-align: center;
+    
+}
+#Imgslider .maindiv{
+    height: 400px;
+    width: 70%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform:translate(-50%,-50%);
+    background-image: url('../../Img/t1.jpg');
+    background-size: 100% 100%;
+    box-shadow: 1px 2px 10px 2px rgb(41, 42, 42);
+    animation: slider 12s infinite linear;
+    
+}
+@keyframes slider {
+
+    0%{
+        background-image: url('../../Img/t1.jpg');
+    }
+    25%{background-image: url('../../Img/m2.jpg');
+
+    } 
+    50%{
+        background-image: url('../../Img/c1.jpg');
+    }
+    75%{
+        background-image: url('../../Img/s1.jpg');
+    }
+    
+}
+

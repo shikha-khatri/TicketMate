@@ -1,0 +1,17 @@
+.buy_tck{
+    display: flex;
+    justify-content:center;
+  }
+   .buy_tck li{
+      list-style: none;
+      text-decoration: none;
+      
+  }
+   .buy_tck li img{
+      height: 50%;
+      width: 50%;
+      margin: 40px 70px;
+  
+      
+  }
+    
