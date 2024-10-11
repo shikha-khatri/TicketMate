@@ -3,15 +3,22 @@ Ticket Mate - A Web-Based Ticket Marketplace
 Ticket Mate is a user-friendly web platform that allows individuals to easily buy and sell pre-purchased tickets for events. The platform offers key features such as ticket listing, search and filter options, secure payment processing, and communication tools for interaction between buyers and sellers. This project simplifies the resale of event tickets, improving convenience and user experience.
 
 Features
+
 Ticket Listing: Users can list their event tickets for sale on the platform.
+
 Search and Filter: Search for tickets by event, location, or price, with options to filter results.
+
 Secure Payment: Secure payment gateways are integrated to facilitate smooth transactions.
+
 User Communication: The platform includes features for direct communication between buyers and sellers to negotiate ticket sales.
 
 Tech Stack
 Frontend: React.js, HTML, CSS
+
 Backend: Node.js
+
 Database: Basic SQL
+
 Other Tools: Google Maps API (optional for event location services)
 
 Installation and Setup
