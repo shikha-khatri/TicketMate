@@ -1,0 +1,125 @@
+/* General Styling */
+#About.about-container {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+  background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styling */
+#About .about-header {
+  text-align: center;
+  margin-bottom: 40px;
+  background: #ff4500;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+#About .about-header h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+#About .about-header p {
+  font-size: 1.2em;
+}
+
+/* Content Sections */
+#About .about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+#About .about-section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+#About .about-section:hover {
+  transform: translateY(-5px);
+}
+
+/* Section Headers */
+#About .about-section h2 {
+  color: #ff4500;
+  margin-bottom: 15px;
+}
+
+/* List Styling */
+#About .about-services ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#About .about-services li {
+  background: #f0f4f8;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+#About .about-services li:before {
+  content: "✓";
+  color: #ff4500;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+/* Footer Styling */
+#About .about-footer {
+  text-align: center;
+  margin-top: 40px;
+}
+
+#About .about-footer a {
+  margin: 0 10px;
+}
+
+#About .about-footer img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+#About .about-footer img:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  #About .about-content {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  #About .about-section {
+    flex: 1 1 calc(33.333% - 20px);
+    margin: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  #About .about-header h1 {
+    font-size: 2em;
+  }
+
+  #About .about-header p {
+    font-size: 1em;
+  }
+  
+  #About .about-section {
+    flex: 1 1 100%;
+    margin: 10px 0;
+  }
+}

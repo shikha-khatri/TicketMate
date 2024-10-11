@@ -173,4 +173,20 @@ router.post(
   }
 );
 
+router.get(
+  "/getAllUsers" ,
+  async(req,res) =>{
+    try{
+      const Allusers = await User.find()
+      const Allmails = Allusers.map(user => user.email)
+      res.json(Allmails)
+    
+    }
+    catch(error){
+        console.error(error.message);
+        res.status(500).send("internal serve error"); 
+
+    }
+  }
+)
 module.exports = router;

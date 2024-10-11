@@ -1,0 +1,695 @@
+const updateUserDetails = async (userId, updatedDetails) => {
+  try {
+    const response = await fetch(`http://localhost:5000/api/auth/updateUser/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('token'),
+      },
+      body: JSON.stringify(updatedDetails),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Failed to update user details:', errorData);
+      // You might want to notify the user of the error
+      return;
+    }
+
+    const data = await response.json();
+    setUserDetails(data.user);
+    setEditing(false);
+    setShowPopup(true); // Show popup after successful update
+  } catch (error) {
+    console.error('Error updating user details:', error);
+    // You might want to notify the user of the error
+  }
+};
+/* Profile.css */
+
+#Profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.Profile {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-details-section {
+  margin-bottom: 20px;
+}
+
+.user-details {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-details h2 {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.history-button-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.history-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.history-button:hover {
+  background-color: #0056b3;
+}
+
+#buyorsell {
+  margin-top: 20px;
+}
+
+.buyorsell ul {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+}
+
+.buyorsell ul li {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.buyorsell ul li.active {
+  border-bottom: 2px solid #007bff;
+  font-weight: bold;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.option {
+  padding: 10px 20px;
+  background-color: #e9e9e9;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.option.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.tickets {
+  margin-top: 20px;
+}
+
+.ticket-item {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.ticket-item h3 {
+  margin-top: 0;
+}
+
+.ticket-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ticket-left,
+.ticket-right {
+  width: 48%;
+}
+
+.ticket-left p,
+.ticket-right p {
+  margin: 5px 0;
+}
+
+.popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: green;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .ticket-details {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .ticket-left,
+  .ticket-right {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-group input {
+    padding: 8px;
+  }
+
+  .actions button {
+    padding: 8px 10px;
+  }
+
+  .option {
+    padding: 8px 10px;
+  }
+
+  .history-button {
+    padding: 8px 10px;
+  }
+
+  .ticket-left,
+  .ticket-right {
+    flex-direction: column;
+  }
+}
+//update not working. some values not correct tickets 
+
+
+
+
+
+
+Follwoing is most working code. 
+import React, { useState, useEffect } from 'react'
+import './Profile.css'
+
+const Profile = () => {
+  const [userDetails, setUserDetails] = useState({})
+  const [editing, setEditing] = useState(false)
+  const [isSold, setIsSold] = useState(true)
+  const [selectedOption, setSelectedOption] = useState('Concert')
+  const [tickets, setTickets] = useState([])
+  const [showHistory, setShowHistory] = useState(false)
+
+  // Function to fetch user details
+  const fetchUserDetails = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/getuser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('token'),
+        },
+      })
+      if (response.ok) {
+        const data = await response.json()
+        setUserDetails(data)
+      } else {
+        console.error('Failed to fetch user details:', response.statusText)
+      }
+    } catch (error) {
+      console.error('Error fetching user details:', error)
+    }
+  }
+
+  // Function to update user details
+  const updateUserDetails = async (userId, updatedDetails) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/auth/updateUser/${userId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': localStorage.getItem('token'),
+          },
+          body: JSON.stringify(updatedDetails),
+        }
+      )
+      if (response.ok) {
+        const data = await response.json()
+        setUserDetails(data.user)
+        setEditing(false)
+      } else {
+        console.error('Failed to update user details:', response.statusText)
+      }
+    } catch (error) {
+      console.error('Error updating user details:', error)
+    }
+  }
+
+  useEffect(() => {
+    fetchUserDetails()
+  }, [])
+
+  const handleOptionChange = (option) => {
+    setSelectedOption(option)
+  }
+
+  const handleEditClick = () => {
+    setEditing(true)
+  }
+
+  const handleSaveClick = () => {
+    const userId = userDetails._id
+    updateUserDetails(userId, userDetails)
+  }
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }))
+  }
+
+  // Function to fetch tickets
+  const fetchTickets = async (endpoint) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/tickets/${endpoint}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': localStorage.getItem('token'),
+          },
+        }
+      )
+      if (response.ok) {
+        const data = await response.json()
+        setTickets(data)
+      } else {
+        console.error('Failed to fetch tickets:', response.statusText)
+      }
+    } catch (error) {
+      console.error('Error fetching tickets:', error)
+    }
+  }
+
+  useEffect(() => {
+    const endpoint = isSold
+      ? `getS_${selectedOption}`
+      : `getB_${selectedOption}`
+    fetchTickets(endpoint)
+  }, [isSold, selectedOption])
+
+  const toggleHistory = () => {
+    setShowHistory(!showHistory)
+  }
+
+  return (
+    <div id="Profile">
+      <div className="Profile">
+        <div className="user-details">
+          <h2>Personal Details</h2>
+          <div className={editing ? 'editing-mode' : ''}>
+            <div className="form-group">
+              <label htmlFor="name">Name:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={userDetails.name || ''}
+                onChange={handleInputChange}
+                disabled={!editing}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={userDetails.email || ''}
+                onChange={handleInputChange}
+                disabled={!editing}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="Username">Username:</label>
+              <input
+                type="text"
+                id="Username"
+                name="Username"
+                value={userDetails.Username || ''}
+                onChange={handleInputChange}
+                disabled={!editing}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="Country">Country:</label>
+              <input
+                type="text"
+                id="Country"
+                name="Country"
+                value={userDetails.Country || ''}
+                onChange={handleInputChange}
+                disabled={!editing}
+              />
+            </div>
+            <div className="actions">
+              {!editing && <button onClick={handleEditClick}>Edit</button>}
+              {editing && (
+                <>
+                  <button onClick={handleSaveClick}>Save</button>
+                  <button onClick={() => setEditing(false)}>Cancel</button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="history-button-container">
+          <button className="history-button" onClick={toggleHistory}>
+            {showHistory ? 'Hide History' : 'Your History'}
+          </button>
+        </div>
+        {showHistory && (
+          <div id="buyorsell">
+            <div className="buyorsell">
+              <ul>
+                <li
+                  className={isSold ? 'active' : 'notactive'}
+                  onClick={() => setIsSold(true)}
+                >
+                  Sold
+                </li>
+                <li
+                  className={isSold ? 'notactive' : 'active'}
+                  onClick={() => setIsSold(false)}
+                >
+                  Bought
+                </li>
+              </ul>
+            </div>
+            <div className="options">
+              {['Concert', 'Movies', 'Sports'].map((option) => (
+                <div
+                  key={option}
+                  className={`option ${
+                    selectedOption === option ? 'active' : ''
+                  }`}
+                  onClick={() => handleOptionChange(option)}
+                >
+                  {option}
+                </div>
+              ))}
+            </div>
+            <div className="tickets">
+              {tickets.length > 0 ? (
+                tickets.map((ticket, index) => (
+                  <div key={index} className="ticket-item">
+                    <h3>{ticket.title}</h3>
+                    <div className="ticket-details">
+                      <div className="ticket-left">
+                        {Object.keys(ticket).map(
+                          (key) =>
+                            key !== '_id' &&
+                            key !== 'user' &&
+                            key !== '__v' && <p key={key}>{key}</p>
+                        )}
+                      </div>
+                      <div className="ticket-right">
+                        {Object.keys(ticket).map(
+                          (key, idx) =>
+                            key !== '_id' &&
+                            key !== 'user' &&
+                            key !== '__v' && (
+                              <p key={`${key}-${idx}`}>{ticket[key]}</p>
+                            )
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>No tickets available.</p>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default Profile
+Profile {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.user-details {
+  margin-bottom: 20px;
+}
+
+.user-details h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.editing-mode .form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.actions button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.actions button:first-child {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.actions button:last-child {
+  background-color: #ddd;
+  color: #333;
+}
+
+.history-button-container {
+  margin-bottom: 20px;
+}
+
+.history-button {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.history-button:hover {
+  background-color: #575757;
+}
+
+#buyorsell .buyorsell ul {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  margin: 0;
+}
+
+#buyorsell .buyorsell ul li {
+  color: white;
+  text-decoration: none;
+  list-style: none;
+  font-size: large;
+  text-align: center;
+  background-color: rgb(236, 29, 29);
+  padding: 10px;
+  width: 50%;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#buyorsell .buyorsell .active {
+  background-color: black;
+}
+
+#buyorsell .buyorsell .notactive {
+  background-color: rgb(236, 29, 29);
+}
+
+#buyorsell .buyorsell .active:hover {
+  background-color: rgb(51, 42, 42);
+}
+
+#buyorsell .buyorsell .notactive:hover {
+  background-color: rgb(250, 54, 54);
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.option {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+  text-align: center;
+  flex: 1;
+}
+
+.option.active {
+  background-color: #04AA6D;
+}
+
+.option:hover {
+  background-color: #575757;
+}
+
+.tickets {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ticket-item {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+  width: 80%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.ticket-item h3 {
+  margin-top: 0;
+}
+
+.ticket-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ticket-left, .ticket-right {
+  text-align: left;
+}
+
+.ticket-left p, .ticket-right p {
+  margin: 2px 0;
+}
+
+.ticket-left p {
+  font-weight: bold;
+}
+
+.ticket-left p::after {
+  content: ':';
+  margin-right: 8px;
+  float: right;
+}
+
+@media (max-width: 768px) {
+  .Profile {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .ticket-item {
+    width: 100%;
+    max-width: none;
+  }
+}

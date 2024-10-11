@@ -1,207 +1,232 @@
-import React, { useState } from 'react'
-import './Bus.css';
-import Buyorsell from '../../../mini_comp/Buyrorsell/Buyorsell';
-import { NavLink, Navigate, useNavigate } from 'react-router-dom';
-import TicketContext from '../../../../TicketContext/TicketContext';
-
-
-
+import React, { useState, useEffect } from 'react'
+import './Bus.css'
+import BuyorSell from '../../../mini_comp/Buyrorsell/Buyorsell'
+import TicketCard from '../../../mini_comp/TicketCard/TicketCard'
+import { NavLink, useNavigate } from 'react-router-dom'
+import TicketContext from '../../../../TicketContext/TicketContext'
 
 const Bus = (props) => {
-    const navigate=useNavigate();
-    const tickets_initial=[];
-    const [total_tckts, settotal_tckts] = useState(tickets_initial);
-    const [ticket_details,setticket_details] = useState({first_name:" a",last_name:" a",email:"a ",journey_from:"a ",journey_to:"a",bus_name:" a",bus_number:" a",bus_cont_no:" a",ticket_number:" a",pnr_number:"a "  })
-    const [Isbuy, setIsbuy] = useState(false);
+  const navigate = useNavigate()
+  const tickets_initial = []
+  const [total_tckts, settotal_tckts] = useState(tickets_initial)
+  const [ticket_details, setticket_details] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    journey_from: '',
+    journey_to: '',
+    journey_date: '',
+    bus_name: '',
+    bus_number: '',
+    bus_cont_no: '',
+    ticket_number: '',
+    pnr_number: '',
+  })
+  const [Isbuy, setIsbuy] = useState(false)
+  const [showPopup, setShowPopup] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [tickets, setTickets] = useState([])
 
-    const OnclickBuy = () => {
-        setIsbuy(true);
-
-    }
-    const OnclickSell = () => {
-        setIsbuy(false);
-    }
-  
-    const onChange = (e) => {
-        setticket_details({ ...ticket_details, [e.target.name]: e.target.value })
-    }
-
-    
-  const save_handlesell = async (e) => {
-    // SetEditable(false);
-    e.preventDefault();
-    const {first_name,last_name,email,journey_from,journey_to,bus_name,bus_number,bus_cont_no,ticket_number,pnr_number } = ticket_details;
-    const response = await fetch(`http://localhost:5000/api/tickets/sellbusticket`, {
-
-      method: 'POST',
-
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('token')
-
-      } // body data type must match "Content-Type" header
-      , body: JSON.stringify({ first_name:ticket_details.first_name,last_name:ticket_details.last_name,email:ticket_details.email,journey_from:ticket_details.journey_from,
-        journey_to:ticket_details.journey_to,bus_name:ticket_details.bus_name,bus_number:ticket_details.bus_number,bus_cont_no:ticket_details.bus_cont_no,ticket_number:ticket_number,pnr_number :ticket_details.pnr_number})
-    });
-    const json = await response.json();
-    // console.log(json);
-    console.log(json)
-    console.log(ticket_details);
-    settotal_tckts(total_tckts.concat(ticket_details));
-    navigate('/Profile');
-   
-   
+  const OnclickBuy = () => {
+    setIsbuy(true)
+    fetchTickets()
   }
-    return (
-  <TicketContext.Provider value={{total_tckts ,settotal_tckts}}>
-    {props.children}
-          <div id='Bus'>
-            <div className='Bus'>
 
-                <div id='buyorsell'>
-                    <div className='buyorsell'>
-                        <ul>
-                            <li className={Isbuy ? 'active' : 'notactive'} onClick={OnclickBuy}>
-                                Buy
-                            </li>
-                            <li className={Isbuy ? 'notactive' : 'active'} onClick={OnclickSell}>
-                                Sell
-                            </li>
-                        </ul>
-                    </div>
+  const OnclickSell = () => {
+    setIsbuy(false)
+  }
 
-                    <div className={Isbuy ? 'buy_data' : 'hide'}>
-                        <h1>Buy</h1>
-                    </div>
-                    <div className={Isbuy ? 'hide' : 'sell_data'}>
-                        <p className='tagline_sell'>
-                            Dont't let your ticket go waste.
-                        </p>
+  const fetchTickets = async () => {
+    try {
+      const response = await fetch(
+        'http://localhost:5000/api/tickets/fetchalluserstickets',
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': localStorage.getItem('token'), // Assuming the token is stored in localStorage
+          },
+        }
+      )
+      const data = await response.json()
+      setTickets(data)
+    } catch (error) {
+      console.error('Error fetching tickets:', error)
+    }
+  }
 
-                        <div className='sell_htmlform'>
-                            <div className="container">
-                                <form onSubmit={save_handlesell} >
-                                    <div className="row">
-                                        <div className="col-25">
-                                            <label htmlFor="fname">First Name</label>
-                                        </div>
-                                        <div className="col-75">
-                                            <input type="text" id="fname" onChange={onChange} name="first_name" placeholder="Your name.." />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-25">
-                                            <label htmlFor="lname">Last Name</label>
-                                        </div>
-                                        <div className="col-75">
-                                            <input type="text" id="lname" onChange={onChange} name="last_name" placeholder="Your last name.." />
-                                        </div>
-                                    </div>
+  const onChange = (e) => {
+    setticket_details({ ...ticket_details, [e.target.name]: e.target.value })
+  }
 
-                                    <div className="row">
-                                        <div className="col-25">
-                                            <label htmlFor="email">Email</label>
-                                        </div>
-                                        <div className="col-75">
-                                            <input type="text" id="email" onChange={onChange} name="email" placeholder="Your email.." />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-25">
-                                            <label htmlFor="jrny_date">Journey From</label>
-                                        </div>
-                                        <div className="col-75">
-                                            <input type="date" id="jrny_date" onChange={onChange} name="journey_date" placeholder="jounery date.." />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-25">
-                                            <label htmlFor="jrny_from">Journey From</label>
-                                        </div>
-                                        <div className="col-75">
-                                            <input type="text" id="jrny_from" onChange={onChange} name="journey_from" placeholder="Source.." />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-25">
-                                            <label htmlFor="jrny_to">Journey To</label>
-                                        </div>
-                                        <div className="col-75">
-                                            <input type="text" id="jrny_to" onChange={onChange} name="journey_to" placeholder="Destination.." />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-25">
-                                            <label htmlFor="bus_name">Bus Name</label>
-                                        </div>
-                                        <div className="col-75">
-                                            <input type="text" id="bus_name" onChange={onChange} name="bus_name" placeholder="Bus Name.." />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-25">
-                                            <label htmlFor="bus_no">Bus Number</label>
-                                        </div>
-                                        <div className="col-75">
-                                            <input type="text" id="bus_number" onChange={onChange} name="bus_number" placeholder="Bus Number.." />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-25">
-                                            <label htmlFor="bus_cont">Bus Contact No.</label>
-                                        </div>
-                                        <div className="col-75">
-                                            <input type="text" id="bus_cont" onChange={onChange} name="bus_cont_no" placeholder="Driver/Conductor" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-25">
-                                            <label htmlFor="tck_no">Ticket Number</label>
-                                        </div>
-                                        <div className="col-75">
-                                            <input type="text" id="tck_no" onChange={onChange} name="ticket_number" placeholder="Ticket No..." />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-25">
-                                            <label htmlFor="pnr_no">PNR Number</label>
-                                        </div>
-                                        <div className="col-75">
-                                            <input type="text" id="pnr_no" onChange={onChange} name="pnr_number" placeholder="PNR No.." />
-                                        </div>
-                                    </div>
-                                    <div className="row termsandconditions">
-                                       
-                                       <ul>
-                                        <li>
-                                        <div className="col-75">
-                                            <input type="checkbox" id="terms" name="terms"/>
-                                        </div>
-                                        </li>
-                                        <li>
-                                        
-                                        <div className="col-25">
-                                        <NavLink to='/termsandconditions'>Terms & Conditions</NavLink>
-                                        </div>
-                                        </li>
-                                       </ul>
-                                    </div>
-                   
-                  
-                                    <div className="row " style={{margin:" 20px 95px"}}>
-                                        <input className='btn_sell' type="submit" value="Sell" />
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/
+    return re.test(email)
+  }
 
-                </div>
-            </div>
-        </div>
-  </TicketContext.Provider>
+  const save_handlesell = async (e) => {
+    e.preventDefault()
+    const {
+      first_name,
+      last_name,
+      email,
+      journey_from,
+      journey_to,
+      journey_date,
+      bus_name,
+      bus_number,
+      bus_cont_no,
+      ticket_number,
+      pnr_number,
+    } = ticket_details
+
+    if (
+      !first_name ||
+      !last_name ||
+      !email ||
+      !journey_from ||
+      !journey_to ||
+      !journey_date ||
+      !bus_name ||
+      !bus_number ||
+      !bus_cont_no ||
+      !ticket_number ||
+      !pnr_number
+    ) {
+      setErrorMessage('All fields are mandatory.')
+      return
+    }
+
+    if (!validateEmail(email)) {
+      setErrorMessage('Invalid email format.')
+      return
+    }
+
+    if (!document.getElementById('terms').checked) {
+      setErrorMessage('You must agree to the terms and conditions.')
+      return
+    }
+
+    setErrorMessage('')
+
+    const response = await fetch(
+      'http://localhost:5000/api/tickets/sellbusticket',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('token'),
+        },
+        body: JSON.stringify(ticket_details),
+      }
     )
+    const json = await response.json()
+    console.log(json)
+    settotal_tckts(total_tckts.concat(ticket_details))
+    setShowPopup(true)
+    setTimeout(() => setShowPopup(false), 3000) // Hide the popup after 3 seconds
+  }
+
+  return (
+    <TicketContext.Provider value={[total_tckts, settotal_tckts]}>
+      {props.children}
+      <div id="Bus">
+        <div className="Bus">
+          <div id="buyorsell">
+            <div className="buyorsell">
+              <ul>
+                <li
+                  className={Isbuy ? 'active' : 'notactive'}
+                  onClick={OnclickBuy}
+                >
+                  Buy
+                </li>
+                <li
+                  className={Isbuy ? 'notactive' : 'active'}
+                  onClick={OnclickSell}
+                >
+                  Sell
+                </li>
+              </ul>
+            </div>
+
+            <div className={Isbuy ? 'buy_data' : 'hide'}>
+              <h1>Buy</h1>
+              {tickets.map((ticket, index) => (
+                <TicketCard
+                  key={index}
+                  f_name={ticket.first_name}
+                  l_name={ticket.last_name}
+                  email={ticket.email}
+                  jrny_from={ticket.journey_from}
+                  jrny_to={ticket.journey_to}
+                  jrny_date={ticket.journey_date}
+                  bus_name={ticket.bus_name}
+                  bus_number={ticket.bus_number}
+                  bus_cont_no={ticket.bus_cont_no}
+                  tck_number={ticket.ticket_number}
+                  pnr_number={ticket.pnr_number}
+                />
+              ))}
+            </div>
+
+            <div className={Isbuy ? 'hide' : 'sell_data'}>
+              <p className="tagline_sell">Don't let your ticket go waste.</p>
+
+              {errorMessage && (
+                <div className="error-message">{errorMessage}</div>
+              )}
+
+              <div className="sell_htmlform">
+                <div className="container">
+                  <form onSubmit={save_handlesell}>
+                    {Object.keys(ticket_details).map((key) => (
+                      <div className="row" key={key}>
+                        <div className="col-25">
+                          <label htmlFor={key}>
+                            {key.replace('_', ' ').toUpperCase()}
+                          </label>
+                        </div>
+                        <div className="col-75">
+                          <input
+                            type={key === 'journey_date' ? 'date' : 'text'}
+                            id={key}
+                            onChange={onChange}
+                            name={key}
+                            placeholder={`Your ${key.replace('_', ' ')}...`}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                    <div className="row termsandconditions">
+                      <div className="col-75">
+                        <input type="checkbox" id="terms" name="terms" />
+                        <label htmlFor="terms">
+                          I agree to the{' '}
+                          <NavLink to="/termsandconditions">
+                            Terms & Conditions
+                          </NavLink>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="row" style={{ margin: '20px 95px' }}>
+                      <input className="btn_sell" type="submit" value="Sell" />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {showPopup && (
+          <div className="popup">
+            Your ticket has been registered for selling.
+          </div>
+        )}
+      </div>
+    </TicketContext.Provider>
+  )
 }
 
 export default Bus
-

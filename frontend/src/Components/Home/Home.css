@@ -1,35 +1,128 @@
-#Home{
-    background-color: rgb(250, 250, 250);
-    height: 100vh;
-    width: 100vw;
-    color: rgb(158, 32, 32);
+/* General Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: Arial, sans-serif;
 }
-#Home .Home{
-    display: flex;
-    justify-content: center;
-}
-#Home .header_tck{
-    display: flex;
-    justify-content: center;
-}
-#Home .header_tck img{
-    color: rgb(222, 205, 205);
-    height: 90px;
-    width: 160px ;
-    border-radius: 10%;
-}
-#Home .container-1{
 
+.home-container {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8); /* To ensure text stands out */
 }
-#Home .btn_exp{
-  margin-top: 550px;
+
+.slider-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  animation: slider 16s infinite ease-in-out;
+}
+
+@keyframes slider {
+  0% { background-image: url('../Img/t1.jpg'); opacity: 0.8; }
+  33% { background-image: url('../Img/m2.jpg'); opacity: 0.8; }
+  66% { background-image: url('../Img/c1.jpg'); opacity: 0.8; }
+  100% { background-image: url('../Img/s1.jpg'); opacity: 0.8; }
+}
+
+.home-content {
   text-align: center;
+  z-index: 1;  /* Ensure the text is above the slider */
+}
+
+.home-heading {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);  /* Text shadow for better readability */
+}
+
+.home-subheading {
+  font-size: 1.5rem;
+  margin-bottom: 40px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);  /* Text shadow for better readability */
+}
+
+.explore-btn {
   background-color: red;
   color: white;
-  width: 120px;
-  padding: 7px;
-  font-size:x-large;
-  margin-left: 30%;
-  
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 1;  /* Ensure the button is above the slider */
 }
 
+.explore-btn:hover {
+  background-color: darkred;
+}
+
+.logout-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #ccc;
+  color: black;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  z-index: 1;  /* Ensure the button is above the slider */
+}
+
+.logout-btn:hover {
+  background-color: #999;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .home-heading {
+    font-size: 2.5rem;
+  }
+
+  .home-subheading {
+    font-size: 1.2rem;
+  }
+
+  .explore-btn {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-heading {
+    font-size: 2rem;
+  }
+
+  .home-subheading {
+    font-size: 1rem;
+  }
+
+  .explore-btn {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  .logout-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}

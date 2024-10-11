@@ -4,6 +4,7 @@
   "description": "'this is backend of my web-app'",
   "main": "index.js",
   "scripts": {
+    "serve": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

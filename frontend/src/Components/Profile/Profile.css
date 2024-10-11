@@ -1,0 +1,224 @@
+.Profile {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.user-details {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-details h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.editing-mode .form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.actions button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.actions button:first-child {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.actions button:last-child {
+  background-color: #ddd;
+  color: #333;
+}
+
+.history-button-container {
+  margin-bottom: 20px;
+}
+
+.history-button {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.history-button:hover {
+  background-color: #575757;
+}
+
+#buyorsell .buyorsell ul {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  margin: 0;
+}
+
+#buyorsell .buyorsell ul li {
+  color: white;
+  text-decoration: none;
+  list-style: none;
+  font-size: large;
+  text-align: center;
+  background-color: rgb(236, 29, 29);
+  padding: 10px;
+  width: 50%;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#buyorsell .buyorsell .active {
+  background-color: black;
+}
+
+#buyorsell .buyorsell .notactive {
+  background-color: rgb(236, 29, 29);
+}
+
+#buyorsell .buyorsell .active:hover {
+  background-color: rgb(51, 42, 42);
+}
+
+#buyorsell .buyorsell .notactive:hover {
+  background-color: rgb(250, 54, 54);
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.option {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+  text-align: center;
+  flex: 1;
+}
+
+.option.active {
+  background-color: #04AA6D;
+}
+
+.option:hover {
+  background-color: #575757;
+}
+
+.tickets {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ticket-item {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+  width: 80%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.ticket-item h3 {
+  margin-top: 0;
+}
+
+.ticket-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ticket-left, .ticket-right {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.ticket-left p, .ticket-right p {
+  margin: 2px 0;
+}
+
+.ticket-left p {
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ticket-left p::after {
+  content: ':';
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.ticket-right p {
+  margin-left: 8px; /* Adjust based on your needs */
+}
+
+@media (max-width: 768px) {
+  .Profile {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .ticket-item {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+/* Popup styles */
+.popup {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #04AA6D;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}

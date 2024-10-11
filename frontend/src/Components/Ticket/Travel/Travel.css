@@ -1,17 +1,84 @@
-.buy_tck{
-    display: flex;
-    justify-content:center;
+
+.Travel_container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+
+}
+
+.buy_tck {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.buy_tck_source {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.buy_tck_source li {
+  list-style: none;
+  margin: 10px;
+}
+
+.buy_tck_source li img {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.buy_tck_source li img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 769px) {
+  .buy_tck_source {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
   }
-   .buy_tck li{
-      list-style: none;
-      text-decoration: none;
-      
+
+  .buy_tck_source li:nth-child(1) {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
   }
-   .buy_tck li img{
-      height: 50%;
-      width: 50%;
-      margin: 40px 70px;
-  
-      
+
+  .buy_tck_source li:nth-child(2) {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
   }
-    
+
+  .buy_tck_source li:nth-child(3) {
+    grid-row: 3 / 4;
+    grid-column: 3 / 4;
+  }
+}
+
+@media (max-width: 768px) {
+  .buy_tck_source {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+
+  .buy_tck_source li img {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .buy_tck_source {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+
+  .buy_tck_source li img {
+    max-width: 200px;
+  }
+}

@@ -1,0 +1,51 @@
+.grid-container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.grid-heading {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center images in the row */
+}
+
+.grid-item {
+  flex: 1 1 calc(33.333% - 20px); /* Maintain the size for 3 images per row */
+  max-width: calc(33.333% - 20px); /* Ensure the max width is maintained */
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+.grid-item img {
+  width: 100%;
+  height: 200px; /* Ensures all images are the same height */
+  object-fit: cover; /* Ensures the image covers the div without stretching */
+  display: block;
+  border-radius: 10px; /* Adds border radius to the images */
+  transition: transform 0.3s; /* Smooth hover effect */
+}
+
+.grid-item img:hover {
+  transform: scale(1.05); /* Zoom effect on hover */
+}
+
+@media (max-width: 768px) {
+  .grid-item {
+    flex: 1 1 calc(50% - 20px); /* Maintain the size for 2 images per row */
+    max-width: calc(50% - 20px); /* Ensure the max width is maintained */
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-item {
+    flex: 1 1 100%; /* One image per row on mobile */
+    max-width: 100%; /* Ensure the max width is maintained */
+  }
+}

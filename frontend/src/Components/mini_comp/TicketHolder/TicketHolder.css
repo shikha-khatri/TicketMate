@@ -1,0 +1,175 @@
+/* General container styling */
+.TicketHolder-container {
+    padding: 20px;
+}
+
+.TicketHolder-buyorsell ul {
+    display: flex;
+    margin: 5px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.TicketHolder-buyorsell li {
+    flex: 1;
+    font-size: small;
+    font-weight: 500;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.TicketHolder-active {
+    background-color: #ff0b0b;
+    color: white;
+    border-radius: 5px;
+}
+
+.TicketHolder-notactive {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+/* Ticket card styling */
+.TicketHolder-card-grid {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.TicketHolder-card {
+    background: linear-gradient(45deg, #2f0303, #ff0b0b, #2f0303);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    text-align: left;
+}
+
+.TicketHolder-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.TicketHolder-card-item {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: flex-start;
+}
+
+.TicketHolder-card-key {
+    flex-basis: 40%;
+    font-weight: bold;
+    word-wrap: break-word;
+}
+
+.TicketHolder-card-value {
+    flex-basis: 60%;
+    word-wrap: break-word;
+    color: rgb(235, 227, 227);
+    font-weight: lighter;
+}
+
+/* Button styling */
+.btn-buy {
+    background-color: #ff0b0b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.btn-buy:hover {
+    background-color: #e00b0b;
+    transform: scale(1.05);
+}
+
+.btn-sell {
+    background-color: #ff0b0b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 100%;
+}
+
+.btn-sell:hover {
+    background-color: #e00b0b;
+    transform: scale(1.05);
+}
+
+/* Form styling */
+.TicketHolder-sell-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.TicketHolder-form-field {
+    margin-bottom: 10px;
+}
+
+.TicketHolder-form-field label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.TicketHolder-form-field input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Success message styling */
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Hide element */
+.TicketHolder-hide {
+    display: none;
+}
+
+/* Responsive adjustments */
+@media (min-width: 1024px) {
+    .TicketHolder-card-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .TicketHolder-card-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .TicketHolder-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .TicketHolder-card-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,122 @@
+/* General container styling */
+.Ticket_Card {
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+}
+
+.detail_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+    background: linear-gradient(45deg, #2f0303, #ff0b0b, #2f0303);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+
+ul {
+    display: flex;
+    margin: 5px 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+    width: 50%;
+    font-size: small;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+.dtl_lbl {
+    font-weight: bold;
+}
+
+.dtl_val {
+    color: rgb(235, 227, 227);
+    font-weight: lighter;
+}
+
+/* Image grid container */
+.image_grid {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    margin-top: 20px;
+}
+
+.image_grid img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Responsive adjustments */
+@media (min-width: 1024px) {
+    .image_grid {
+        grid-template-columns: repeat(4, 1fr);
+        justify-content: center;
+    }
+}
+
+@media (max-width: 1024px) {
+    .image_grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .image_grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .image_grid {
+        grid-template-columns: 1fr;
+    }
+
+    ul {
+        flex-direction: column;
+    }
+
+    li {
+        width: 100%;
+    }
+}
+
+/* Buy Ticket Button styling */
+.buy-ticket-btn {
+    background-color: #ff0b0b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.buy-ticket-btn:hover {
+    background-color: #c00909;
+}
+
+/* Sell Ticket Button styling */
+.btn-sell {
+    background-color: #ff0b0b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-sell:hover {
+    background-color: #c00909;
+}
