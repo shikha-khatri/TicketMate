@@ -36,9 +36,7 @@
       "not dead",
       "not op_mini all"
     ],
-    "scripts": {
-  "build": "react-scripts build"  // or any other appropriate build command
-},
+   
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
